@@ -1,7 +1,6 @@
 img = imread("snowflake.png");
-img = 255 - img;
-
-isize = size(img,1);
+img = padarray(img, [1, 1], 0, 'both');
+isize = size(img, 1);
 knot_vectorx=0:isize-1;
 knot_vectorx(1:3) = 0;
 
@@ -19,7 +18,7 @@ knot = knot_vectorx;     % knot vector (5,2)
 %[ 16 intervals and quadratic B-splines]
 dt = 0.0001;                    % time step size
 theta = 0;                  % scheme parameter (0 - explicit Euler, 1 - implicit Euler, 1/2 - Crank-Nicolson)
-K = 120;                       % number of time steps
+K = 100;                       % number of time steps
 
 % Problem formulation
 %f = @(t, x) 1;
@@ -72,8 +71,8 @@ fixed_dofs = boundary_dofs2d(bx, by);
 
 %This is like a projections of a bitmap of initial state into splines
 % Put the initial state into u
-u = project2d(init_state, bx, by);
-% u = im2double(rgb2gray(img));
+% u = project2d(init_state, bx, by);
+u = im2double(rgb2gray(img));
 
 % Plot the initial state
 save_plot(u, 0, bx, by);
